@@ -527,8 +527,7 @@
       "type": "object",
       "description": "An external command whose stdout is an MPEG-TS stream, proxied to ffmpeg over loopback HTTP.",
       "required": [
-        "source_type",
-        "command"
+        "source_type"
       ],
       "properties": {
         "source_type": {
@@ -537,7 +536,7 @@
         },
         "command": {
           "type": "string",
-          "description": "Command that writes an MPEG-TS stream to its stdout. Supports {{TEMPLATE}} expansion."
+          "description": "Command that writes an MPEG-TS stream to its stdout. Supports {{TEMPLATE}} expansion. If omitted or empty, runtime falls back to a black lavfi video source for compatibility with legacy playout files."
         },
         "args": {
           "type": "array",

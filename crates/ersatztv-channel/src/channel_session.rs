@@ -747,6 +747,15 @@ impl ChannelSession {
                 }))
             }
             PlayoutItemSource::Script { command, args, .. } => {
+                if command.trim().is_empty() {
+                    log::warn!(
+                        "playout source_type=script is missing command; using black lavfi fallback"
+                    );
+                    return Ok(InputSource::Lavfi(LavfiInputSource {
+                        params: "color=c=black".to_owned(),
+                    }));
+                }
+
                 let url = self.local_proxy_server.register_script(ScriptCommand {
                     command: expand_template(&command)?,
                     args: args
