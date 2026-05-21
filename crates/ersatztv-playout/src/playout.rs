@@ -216,7 +216,7 @@ pub enum PlayoutItemSource {
     },
     Script {
         /// Command that writes an MPEG-TS stream to its stdout
-        #[serde(default)]
+        #[serde(default, alias = "url")]
         command: String,
         /// Optional arguments for the command
         #[serde(default, skip_serializing_if = "Vec::is_empty")]

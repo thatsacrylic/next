@@ -747,6 +747,15 @@ impl ChannelSession {
                 }))
             }
             PlayoutItemSource::Script { command, args, .. } => {
+                let command = command.trim();
+
+                if command.starts_with("rtmp://") || command.starts_with("rtmps://") {
+                    return Ok(InputSource::Rtmp(RtmpInputSource {
+                        uri: command.to_owned(),
+                        options: RtmpInputOptions::default(),
+                    }));
+                }
+
                 if command.trim().is_empty() {
                     log::warn!(
                         "playout source_type=script is missing command; using black lavfi fallback"
@@ -762,7 +771,7 @@ impl ChannelSession {
                 }
 
                 let url = self.local_proxy_server.register_script(ScriptCommand {
-                    command: expand_template(&command)?,
+                    command: expand_template(command)?,
                     args: args
                         .iter()
                         .map(|a| expand_template(a))
