@@ -204,6 +204,11 @@ pub enum PlayoutItemSource {
         #[serde(skip_serializing_if = "Option::is_none")]
         keep_alive: Option<bool>,
     },
+    Rtmp {
+        uri: String,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        timeout_us: Option<u64>,
+    },
     Rtsp {
         uri: String,
         #[serde(skip_serializing_if = "Option::is_none")]

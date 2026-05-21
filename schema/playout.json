@@ -328,6 +328,9 @@
           "$ref": "#/definitions/HttpSource"
         },
         {
+          "$ref": "#/definitions/RtmpSource"
+        },
+        {
           "$ref": "#/definitions/RtspSource"
         },
         {
@@ -465,6 +468,32 @@
             "null"
           ],
           "description": "Enable persistent connections in ffmpeg. Default: false."
+        }
+      }
+    },
+    "RtmpSource": {
+      "type": "object",
+      "description": "A live stream pulled over RTMP/RTMPS. Always treated as live: it is never seeked and cannot work ahead.",
+      "required": [
+        "source_type",
+        "uri"
+      ],
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "const": "rtmp"
+        },
+        "uri": {
+          "type": "string",
+          "description": "RTMP URI template, e.g. \"rtmp://stream.example.com/live/app\"."
+        },
+        "timeout_us": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Socket timeout in microseconds."
         }
       }
     },
