@@ -751,8 +751,13 @@ impl ChannelSession {
                     log::warn!(
                         "playout source_type=script is missing command; using black lavfi fallback"
                     );
+                    let width = self.channel_config.normalization.video.width.unwrap_or(1920);
+                    let height = self.channel_config.normalization.video.height.unwrap_or(1080);
                     return Ok(InputSource::Lavfi(LavfiInputSource {
-                        params: "color=c=black".to_owned(),
+                        params: format!(
+                            "color=c=black:s={}x{}:r=24,drawtext=fontcolor=white:fontsize=42:text='ERROR\\: script source missing command':x=(w-text_w)/2:y=(h-text_h)/2",
+                            width, height
+                        ),
                     }));
                 }
 
